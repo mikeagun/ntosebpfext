@@ -1,0 +1,98 @@
+;
+;  Copyright (c) Microsoft Corporation
+;  SPDX-License-Identifier: MIT
+;
+
+;
+; FlowEbpfExt.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=EbpfExtension
+ClassGuid={b23b88e3-60fb-4950-b71e-2f70e591dff6}
+Provider=%ManufacturerName%
+CatalogFile=FlowEbpfExt.cat
+DriverVer= 1/11/2021,1.0.0.0
+PnpLockDown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+FlowEbpfExt_Device_CoInstaller_CopyFiles = 11
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=EbpfExtensionClassReg
+
+[EbpfExtensionClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+FlowEbpfExt.sys  = 1,,
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%FlowEbpfExt.DeviceDesc%=FlowEbpfExt_Device, Root\FlowEbpfExt
+
+[FlowEbpfExt_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+FlowEbpfExt.sys
+
+[DefaultUninstall]
+DelFiles = Drivers_Dir
+
+[DefaultUninstall.Services]
+DelService = FlowEbpfExt,0x200                                ; SPSVCINST_STOPSERVICE
+
+;-------------- Service installation
+[FlowEbpfExt_Device.NT.Services]
+AddService = FlowEbpfExt,%SPSVCINST_ASSOCSERVICE%, FlowEbpfExt_Service_Inst
+
+; -------------- FlowEbpfExt driver install sections
+[FlowEbpfExt_Service_Inst]
+DisplayName    = %FlowEbpfExt.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\FlowEbpfExt.sys
+
+;
+;--- FlowEbpfExt_Device Coinstaller installation ------
+;
+
+[FlowEbpfExt_Device.NT.CoInstallers]
+AddReg=FlowEbpfExt_Device_CoInstaller_AddReg
+CopyFiles=FlowEbpfExt_Device_CoInstaller_CopyFiles
+
+[FlowEbpfExt_Device_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[FlowEbpfExt_Device_CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[FlowEbpfExt_Device.NT.Wdf]
+KmdfService =  FlowEbpfExt, FlowEbpfExt_wdfsect
+[FlowEbpfExt_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="EdgeOS CoreNtos"
+ClassName="EbpfExtension"
+DiskName = "FlowEbpfExt Installation Disk"
+FlowEbpfExt.DeviceDesc = "FlowEbpfExt Device"
+FlowEbpfExt.SVCDESC = "FlowEbpfExt Service"

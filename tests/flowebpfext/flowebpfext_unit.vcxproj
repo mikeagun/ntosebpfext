@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) Microsoft Corporation
+  SPDX-License-Identifier: MIT
+-->
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\ntosebpfext.props" />
+  <Import Project="$(eBPFForWindowsPackagePath)\build\native\ebpf-for-windows.x64.props" Condition="Exists('$(eBPFForWindowsPackagePath)\build\native\ebpf-for-windows.x64.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{F0E0B1A2-1234-4B56-9CDE-FA1234567890}</ProjectGuid>
+    <RootNamespace>flowebpfext_unit</RootNamespace>
+    <ProjectName>flowebpfext_unit</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" >
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemGroup>
+    <ClCompile Include="flowebpfext_unit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\catch_wrapper.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\watchdog.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\ebpf_extensions\flowebpfext\flow_ebpf_ext_classify.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\ebpf_extensions\flowebpfext\flow_ebpf_ext_program_info.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\libs\ebpf_ext\include\ebpf_ext.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\libs\ebpf_ext\ebpf_ext_tracelog.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\ebpf_extension_uuids.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- ProjectReference Include="$(MSBuildThisFileDirectory)..\..\ebpf_extensions\ntosebpfext\user\flowebpfext_user.vcxproj">
+      <Project>{6FA48CB1-AD98-42BD-9A83-31B4FBBA44D1}</Project>
+    </ProjectReference -->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\external\Catch2\build\src\Catch2.vcxproj">
+      <Project>{8d538cbe-01bf-4a2e-a98a-6c368fdf13d7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\external\Catch2\build\src\Catch2WithMain.vcxproj">
+      <Project>{8bd3552a-2cfb-4a59-ab15-2031b97ada1e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\external\usersim\src\usersim.vcxproj">
+      <Project>{030a7ac6-14dc-45cf-af34-891057ab1402}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(MSBuildThisFileDirectory)..\..\libs\ebpf_ext</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(MSBuildThisFileDirectory)..\..\libs\ebpf_ext</IncludePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(MSBuildThisFileDirectory)..\include;
+        $(MSBuildThisFileDirectory)..\..\include;
+        $(MSBuildThisFileDirectory)..\..\libs\include\user;
+        $(MSBuildThisFileDirectory)..\..\libs\include;
+        $(MSBuildThisFileDirectory)..\..\tests\include;
+        $(MSBuildThisFileDirectory)..\..\external\catch2\src;
+        $(MSBuildThisFileDirectory)..\..\external\catch2\build\generated-includes;
+        $(MSBuildThisFileDirectory)..\..\ebpf_extensions\flowebpfext;
+        $(MSBuildThisFileDirectory)..\..\external\usersim\inc;
+        $(MSBuildThisFileDirectory)..\..\external\usersim\cxplat\inc;
+        $(MSBuildThisFileDirectory)..\..\external\usersim\cxplat\inc\winuser;
+        $(MSBuildThisFileDirectory)..\..\libs\ebpf_ext
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>mincore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VC_LibraryPath_VC_x64_Desktop);$(MSBuildThisFileDirectory)..\..\$(Platform)\$(ConfigurationName)\;%(Link.AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(MSBuildThisFileDirectory)..\include;
+        $(MSBuildThisFileDirectory)..\..\include;
+        $(MSBuildThisFileDirectory)..\..\libs\include\user;
+        $(MSBuildThisFileDirectory)..\..\libs\include;
+        $(MSBuildThisFileDirectory)..\..\tests\include;
+        $(MSBuildThisFileDirectory)..\..\external\catch2\src;
+        $(MSBuildThisFileDirectory)..\..\external\catch2\build\generated-includes;
+        $(MSBuildThisFileDirectory)..\..\ebpf_extensions\flowebpfext;
+        $(MSBuildThisFileDirectory)..\..\external\usersim\inc;
+        $(MSBuildThisFileDirectory)..\..\external\usersim\cxplat\inc;
+        $(MSBuildThisFileDirectory)..\..\external\usersim\cxplat\inc\winuser;
+        $(MSBuildThisFileDirectory)..\..\libs\ebpf_ext
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>mincore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+        $(VC_LibraryPath_VC_x64_Desktop);
+        $(MSBuildThisFileDirectory)..\..\$(Platform)\$(ConfigurationName)\;
+        %(Link.AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(eBPFForWindowsPackagePath)\build\native\ebpf-for-windows.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '$(eBPFForWindowsPackagePath)\build\native\ebpf-for-windows.x64.props'))" />
+  </Target>
+</Project>
