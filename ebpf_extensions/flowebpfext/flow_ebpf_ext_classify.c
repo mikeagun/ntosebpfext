@@ -5,46 +5,47 @@
  * @file
  * @brief This file implements the flow classify program type hook on eBPF for Windows (stream inspection API).
  */
-//#if defined(NTDDI_VERSION) || defined(NT_KERNEL_MODE)
-#include <ntifs.h> // Must be included before ntddk.h
-#include <ntddk.h>
-#pragma warning(push)
-#pragma warning(disable:4062)       // unhandled switch case
-#include <wdf.h>
-#pragma warning(pop)
-//#include <guiddef.h>
-#include <initguid.h>
-#include <fwpsk.h>
-#include <fwpmk.h>
-//#else
-//// FIXME: ???
-//#endif
+#include "framework.h"
+// //#if defined(NTDDI_VERSION) || defined(NT_KERNEL_MODE)
+// #include <ntifs.h> // Must be included before ntddk.h
+// #include <ntddk.h>
+// #pragma warning(push)
+// #pragma warning(disable:4062)       // unhandled switch case
+// #include <wdf.h>
+// #pragma warning(pop)
+// //#include <guiddef.h>
+// #include <initguid.h>
+// #include <fwpsk.h>
+// #include <fwpmk.h>
+// //#else
+// //// FIXME: ???
+// //#endif
 
 #include "flow_ebpf_ext_classify.h"
 #include "flow_ebpf_ext_program_info.h"
 
-//#include "flow_ebpf_ext_stream.h"
+// #include "flow_ebpf_ext_stream.h"
 
-//#if defined(NTDDI_VERSION) || defined(NT_KERNEL_MODE)
-//#include <fwpmk.h>
-//#include <fwpsk.h>
-//#endif
+// #if defined(NTDDI_VERSION) || defined(NT_KERNEL_MODE)
+// #include <fwpmk.h>
+// #include <fwpsk.h>
+// #endif
 
 #include <errno.h>
 
 // GUIDs for callouts (define your own or use static const GUIDs)
 // {A1B2C3D4-1111-2222-3333-444455556666}
-static const GUID FLOWEBPFEXT_STREAM_CALLOUT_V4 = 
-    {0xa1b2c3d4, 0x1111, 0x2222, {0x33, 0x33, 0x44, 0x44, 0x55, 0x55, 0x66, 0x66}};
+static const GUID FLOWEBPFEXT_STREAM_CALLOUT_V4 = {
+    0xa1b2c3d4, 0x1111, 0x2222, {0x33, 0x33, 0x44, 0x44, 0x55, 0x55, 0x66, 0x66}};
 // {A1B2C3D4-1111-2222-3333-444455556667}
-static const GUID FLOWEBPFEXT_STREAM_CALLOUT_V6 = 
-    {0xa1b2c3d4, 0x1111, 0x2222, {0x33, 0x33, 0x44, 0x44, 0x55, 0x55, 0x66, 0x67}};
+static const GUID FLOWEBPFEXT_STREAM_CALLOUT_V6 = {
+    0xa1b2c3d4, 0x1111, 0x2222, {0x33, 0x33, 0x44, 0x44, 0x55, 0x55, 0x66, 0x67}};
 // {A1B2C3D4-1111-2222-3333-444455556668}
-static const GUID FLOWEBPFEXT_FLOW_ESTABLISHED_CALLOUT_V4 = 
-    {0xa1b2c3d4, 0x1111, 0x2222, {0x33, 0x33, 0x44, 0x44, 0x55, 0x55, 0x66, 0x68}};
+static const GUID FLOWEBPFEXT_FLOW_ESTABLISHED_CALLOUT_V4 = {
+    0xa1b2c3d4, 0x1111, 0x2222, {0x33, 0x33, 0x44, 0x44, 0x55, 0x55, 0x66, 0x68}};
 // {A1B2C3D4-1111-2222-3333-444455556669}
-static const GUID FLOWEBPFEXT_FLOW_ESTABLISHED_CALLOUT_V6 = 
-    {0xa1b2c3d4, 0x1111, 0x2222, {0x33, 0x33, 0x44, 0x44, 0x55, 0x55, 0x66, 0x69}};
+static const GUID FLOWEBPFEXT_FLOW_ESTABLISHED_CALLOUT_V6 = {
+    0xa1b2c3d4, 0x1111, 0x2222, {0x33, 0x33, 0x44, 0x44, 0x55, 0x55, 0x66, 0x69}};
 
 #ifndef FLOWEBPFEXT_PORT_HTTPS
 #define FLOWEBPFEXT_PORT_HTTPS 9993
@@ -54,12 +55,10 @@ static const GUID FLOWEBPFEXT_FLOW_ESTABLISHED_CALLOUT_V6 =
 static UINT32 g_flowebpfext_flow_established_callout_id_v4 = 0;
 static UINT32 g_flowebpfext_flow_established_callout_id_v6 = 0;
 
-
 typedef struct _flowebpfext_stream_context
 {
     ebpf_extension_hook_client_t* attached_program;
 } flowebpfext_stream_context_t;
-
 
 static ebpf_result_t
 _ebpf_flow_context_create(
@@ -77,7 +76,8 @@ _ebpf_flow_context_destroy(
     _Out_writes_bytes_to_(*context_size_out, *context_size_out) uint8_t* context_out,
     _Inout_ size_t* context_size_out);
 
-void flowebpfext_stream_classify(
+void
+flowebpfext_stream_classify(
     const FWPS_INCOMING_VALUES* inFixedValues,
     const FWPS_INCOMING_METADATA_VALUES* inMetaValues,
     void* layerData,
@@ -90,7 +90,6 @@ void
 flowebpfext_register_flow_callouts();
 void
 flowebpfext_flow_unregister_callouts();
-
 
 _Success_(return >= 0) static int32_t _ebpf_flow_test_helper(
     _In_ flow_classify_md_t* flow_md, _Out_writes_bytes_(tuple_length) uint8_t* tuple, uint32_t tuple_length)
@@ -122,8 +121,7 @@ static ebpf_program_data_t _ebpf_flow_program_data = {
 };
 
 static ebpf_extension_data_t _ebpf_flow_program_info_provider_data = {
-    .header = {EBPF_EXTENSION_NPI_PROVIDER_VERSION, sizeof(_ebpf_flow_program_data)},
-    .data = &_ebpf_flow_program_data};
+    .header = {EBPF_EXTENSION_NPI_PROVIDER_VERSION, sizeof(_ebpf_flow_program_data)}, .data = &_ebpf_flow_program_data};
 
 NPI_MODULEID DECLSPEC_SELECTANY _ebpf_flow_program_info_provider_moduleid = {sizeof(NPI_MODULEID), MIT_GUID, {0}};
 
@@ -172,7 +170,7 @@ _flow_ebpf_extension_flow_on_client_attach(
         _ebpf_flow_hook_provider_registered = TRUE;
     }
     _ebpf_flow_hook_provider_registration_count++;
-//Exit:
+    // Exit:
     if (push_lock_acquired) {
         ExReleasePushLockExclusive(&_ebpf_flow_hook_provider_lock);
     }
@@ -183,7 +181,7 @@ _flow_ebpf_extension_flow_on_client_attach(
 static void
 _flow_ebpf_extension_flow_on_client_detach(_In_ const ebpf_extension_hook_client_t* detaching_client)
 {
-    //ebpf_result_t result = EBPF_SUCCESS;
+    // ebpf_result_t result = EBPF_SUCCESS;
 
     EBPF_EXT_LOG_ENTRY();
 
@@ -261,7 +259,8 @@ Exit:
     EBPF_EXT_RETURN_NTSTATUS(status);
 }
 
-typedef struct _flow_notify_context {
+typedef struct _flow_notify_context
+{
     EBPF_CONTEXT_HEADER;
     flow_classify_md_t flow_md;
 } flow_notify_context_t;
@@ -285,8 +284,7 @@ _ebpf_flow_context_create(
     }
     flow_context = (flow_notify_context_t*)ExAllocatePoolUninitialized(
         NonPagedPoolNx, sizeof(flow_notify_context_t), EBPF_EXTENSION_POOL_TAG);
-    EBPF_EXT_BAIL_ON_ALLOC_FAILURE_RESULT(
-        EBPF_EXT_TRACELOG_KEYWORD_FLOW, flow_context, "flow_context", result);
+    EBPF_EXT_BAIL_ON_ALLOC_FAILURE_RESULT(EBPF_EXT_TRACELOG_KEYWORD_FLOW, flow_context, "flow_context", result);
     memcpy(&flow_context->flow_md, context_in, sizeof(flow_classify_md_t));
     flow_context->flow_md.data_start = (uint8_t*)data_in;
     flow_context->flow_md.data_end = (uint8_t*)data_in + data_size_in;
@@ -328,8 +326,7 @@ _ebpf_flow_context_destroy(
 
     // Copy the resulting data to the data_out.
     if (data_out != NULL &&
-        *data_size_out >=
-            (size_t)(flow_context->flow_md.data_end - flow_context->flow_md.data_start)) {
+        *data_size_out >= (size_t)(flow_context->flow_md.data_end - flow_context->flow_md.data_start)) {
         memcpy(
             data_out,
             flow_context->flow_md.data_start,
@@ -342,8 +339,6 @@ _ebpf_flow_context_destroy(
 Exit:
     EBPF_EXT_LOG_EXIT();
 }
-
-
 
 // Add static variables to store callout IDs
 static UINT32 g_flowebpfext_stream_callout_id_v4 = 0;
@@ -391,38 +386,37 @@ flowebpfext_stream_classify(
     }
 
     uint32_t result = 0;
-    ebpf_result_t invoke_result = ebpf_extension_hook_invoke_program(
-        stream_ctx->attached_program, layerData, &result);
+    ebpf_result_t invoke_result = ebpf_extension_hook_invoke_program(stream_ctx->attached_program, layerData, &result);
     if (invoke_result != EBPF_SUCCESS || result != NEED_MORE_DATA) {
-        FwpsFlowRemoveContext0(
-            (UINT64)flowContext, layerId, filter->action.calloutId);
+        FwpsFlowRemoveContext0((UINT64)flowContext, layerId, filter->action.calloutId);
         ExFreePool(stream_ctx);
         stream_ctx = NULL;
     }
     if (invoke_result == EBPF_SUCCESS) {
         if (result == ALLOW) {
-            EBPF_EXT_LOG_MESSAGE(EBPF_EXT_TRACELOG_LEVEL_INFO, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "eBPF program allowed the flow");
+            EBPF_EXT_LOG_MESSAGE(
+                EBPF_EXT_TRACELOG_LEVEL_INFO, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "eBPF program allowed the flow");
             classifyOut->actionType = FWP_ACTION_PERMIT;
         } else if (result == BLOCK) {
-            EBPF_EXT_LOG_MESSAGE(EBPF_EXT_TRACELOG_LEVEL_INFO, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "eBPF program blocked the flow");
+            EBPF_EXT_LOG_MESSAGE(
+                EBPF_EXT_TRACELOG_LEVEL_INFO, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "eBPF program blocked the flow");
             classifyOut->actionType = FWP_ACTION_BLOCK;
         } else if (result == NEED_MORE_DATA) {
             classifyOut->actionType = FWP_ACTION_CONTINUE;
         } else {
-            EBPF_EXT_LOG_MESSAGE(EBPF_EXT_TRACELOG_LEVEL_ERROR, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "Unexpected result from eBPF program");
+            EBPF_EXT_LOG_MESSAGE(
+                EBPF_EXT_TRACELOG_LEVEL_ERROR, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "Unexpected result from eBPF program");
             classifyOut->actionType = FWP_ACTION_CONTINUE;
         }
     } else {
-        EBPF_EXT_LOG_MESSAGE(EBPF_EXT_TRACELOG_LEVEL_ERROR, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "eBPF program invoke_result != SUCCESS");
+        EBPF_EXT_LOG_MESSAGE(
+            EBPF_EXT_TRACELOG_LEVEL_ERROR, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "eBPF program invoke_result != SUCCESS");
         classifyOut->actionType = FWP_ACTION_CONTINUE;
     }
 }
 
 void
-flowebpfext_flow_delete(
-    UINT16 layerId,
-    UINT32 calloutId,
-    uint64_t flowContext)
+flowebpfext_flow_delete(UINT16 layerId, UINT32 calloutId, uint64_t flowContext)
 {
     flowebpfext_stream_context_t* stream_ctx = (flowebpfext_stream_context_t*)(uintptr_t)flowContext;
     if (stream_ctx) {
@@ -449,31 +443,38 @@ flowebpfext_flow_established_classify(
     UNREFERENCED_PARAMETER(filter);
     // Only initialize context if not already present
     if (flowContext == 0) {
-        flowebpfext_stream_context_t* stream_ctx = (flowebpfext_stream_context_t*)ExAllocatePoolUninitialized(NonPagedPoolNx, sizeof(flowebpfext_stream_context_t), 'flwC');
+        flowebpfext_stream_context_t* stream_ctx = (flowebpfext_stream_context_t*)ExAllocatePoolUninitialized(
+            NonPagedPoolNx, sizeof(flowebpfext_stream_context_t), 'flwC');
         if (!stream_ctx) {
-            EBPF_EXT_LOG_MESSAGE(EBPF_EXT_TRACELOG_LEVEL_ERROR, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "stream_ctx alloc failed");
+            EBPF_EXT_LOG_MESSAGE(
+                EBPF_EXT_TRACELOG_LEVEL_ERROR, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "stream_ctx alloc failed");
             classifyOut->actionType = FWP_ACTION_CONTINUE;
             return;
         }
-        stream_ctx->attached_program = ebpf_extension_hook_get_next_attached_client(_ebpf_flow_hook_provider_context, NULL);
+        stream_ctx->attached_program =
+            ebpf_extension_hook_get_next_attached_client(_ebpf_flow_hook_provider_context, NULL);
         UINT16 layerId = 0;
         if (filter->action.calloutId == g_flowebpfext_flow_established_callout_id_v4) {
             layerId = FWPS_LAYER_ALE_FLOW_ESTABLISHED_V4;
         } else if (filter->action.calloutId == g_flowebpfext_flow_established_callout_id_v6) {
             layerId = FWPS_LAYER_ALE_FLOW_ESTABLISHED_V6;
         } else {
-            EBPF_EXT_LOG_MESSAGE(EBPF_EXT_TRACELOG_LEVEL_ERROR, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "Invalid calloutId in flow_established_classify");
+            EBPF_EXT_LOG_MESSAGE(
+                EBPF_EXT_TRACELOG_LEVEL_ERROR,
+                EBPF_EXT_TRACELOG_KEYWORD_FLOW,
+                "Invalid calloutId in flow_established_classify");
             classifyOut->actionType = FWP_ACTION_CONTINUE;
             ExFreePool(stream_ctx);
             return;
         }
         NTSTATUS status = FwpsFlowAssociateContext0(
-            (UINT64)inMetaValues->flowHandle,
-            (UINT16)layerId,
-            (UINT32)filter->action.calloutId,
-            (UINT64)stream_ctx);
+            (UINT64)inMetaValues->flowHandle, (UINT16)layerId, (UINT32)filter->action.calloutId, (UINT64)stream_ctx);
         if (!NT_SUCCESS(status)) {
-            EBPF_EXT_LOG_MESSAGE_NTSTATUS(EBPF_EXT_TRACELOG_LEVEL_ERROR, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "FwpsFlowAssociateContext0 failed", status);
+            EBPF_EXT_LOG_MESSAGE_NTSTATUS(
+                EBPF_EXT_TRACELOG_LEVEL_ERROR,
+                EBPF_EXT_TRACELOG_KEYWORD_FLOW,
+                "FwpsFlowAssociateContext0 failed",
+                status);
             ExFreePool(stream_ctx);
             classifyOut->actionType = FWP_ACTION_CONTINUE;
             return;
@@ -520,7 +521,7 @@ flowebpfext_register_flow_callouts()
     // Register callout for IPv4 (flow established)
     callout.calloutKey = FLOWEBPFEXT_FLOW_ESTABLISHED_CALLOUT_V4;
     callout.classifyFn = flowebpfext_flow_established_classify;
-    //callout.flowDeleteFn = flowebpfext_flow_delete;
+    // callout.flowDeleteFn = flowebpfext_flow_delete;
     callout.flags = 0;
     status = FwpsCalloutRegister(NULL, &callout, &calloutId);
     if (!NT_SUCCESS(status))
@@ -530,7 +531,7 @@ flowebpfext_register_flow_callouts()
     // Register callout for IPv6 (flow established)
     callout.calloutKey = FLOWEBPFEXT_FLOW_ESTABLISHED_CALLOUT_V6;
     callout.classifyFn = flowebpfext_flow_established_classify;
-    //callout.flowDeleteFn = flowebpfext_flow_delete;
+    // callout.flowDeleteFn = flowebpfext_flow_delete;
     callout.flags = 0;
     status = FwpsCalloutRegister(NULL, &callout, &calloutId);
     if (!NT_SUCCESS(status))

@@ -60,9 +60,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\ebpf_extension_uuids.h" />
   </ItemGroup>
   <ItemGroup>
-    <!-- ProjectReference Include="$(MSBuildThisFileDirectory)..\..\ebpf_extensions\ntosebpfext\user\flowebpfext_user.vcxproj">
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\ebpf_extensions\ntosebpfext\user\flowebpfext_user.vcxproj">
       <Project>{6FA48CB1-AD98-42BD-9A83-31B4FBBA44D1}</Project>
-    </ProjectReference -->
+    </ProjectReference>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\external\Catch2\build\src\Catch2.vcxproj">
       <Project>{8d538cbe-01bf-4a2e-a98a-6c368fdf13d7}</Project>
     </ProjectReference>

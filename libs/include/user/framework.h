@@ -10,6 +10,7 @@
 #include "usersim\ps.h"
 #include "usersim\rtl.h"
 #include "usersim\se.h"
+#include "usersim\wdf.h"
 
 #define ebpf_fault_injection_is_enabled() cxplat_fault_injection_is_enabled()
 

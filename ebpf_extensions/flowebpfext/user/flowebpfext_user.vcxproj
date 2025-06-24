@@ -61,9 +61,28 @@
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>PROVIDER_NAME=flow;_DEBUG;_CONSOLE;_AMD64_;AMD64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>
+        PROVIDER_NAME=flow;
+        _DEBUG;
+        _CONSOLE;
+        _AMD64_;
+        AMD64;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(SolutionDir)include;$(SolutionDir)libs\include\user;$(SolutionDir)external\usersim\inc;$(SolutionDir)include\user;$(SolutionDir)flowebpfext;$(SolutionDir)flowebpfext\user;$(SolutionDir)external\usersim\cxplat\inc;$(SolutionDir)external\usersim\cxplat\inc\winuser;$(SolutionDir)libs\ebpf_ext;$(SolutionDir)resource</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(MSBuildThisFileDirectory)..\..\..\include;
+        $(MSBuildThisFileDirectory)..\..\..\libs\include\user;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\inc;
+        $(MSBuildThisFileDirectory)..\..\..\include\user;
+        $(MSBuildThisFileDirectory)..\..\..\flowebpfext;
+        $(MSBuildThisFileDirectory)..\..\..\flowebpfext\user;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc\winuser;
+        $(MSBuildThisFileDirectory)..\..\..\libs\ebpf_ext;
+        $(MSBuildThisFileDirectory)..\..\..\resource
+      </AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>
       <CompileAs>CompileAsCpp</CompileAs>
       <DisableSpecificWarnings>4505</DisableSpecificWarnings>
@@ -76,11 +95,31 @@
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(ConfigurationName)\</AdditionalLibraryDirectories>
     </Lib>
-  </ItemDefinitionGroup>  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PreprocessorDefinitions>PROVIDER_NAME=flow;NDEBUG;_CONSOLE;_AMD64_;AMD64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(SolutionDir)include;$(SolutionDir)libs\include\user;$(SolutionDir)external\usersim\inc;$(SolutionDir)include\user;$(SolutionDir)flowebpfext;$(SolutionDir)flowebpfext\user;$(SolutionDir)external\usersim\cxplat\inc;$(SolutionDir)external\usersim\cxplat\inc\winuser;$(SolutionDir)libs\ebpf_ext;$(SolutionDir)resource</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>
+        PROVIDER_NAME=flow;
+        NDEBUG;
+        _CONSOLE;
+        _AMD64_;
+        AMD64;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(MSBuildThisFileDirectory)..\..\..\include;
+        $(MSBuildThisFileDirectory)..\..\..\libs\include\user;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\inc;
+        $(MSBuildThisFileDirectory)..\..\..\include\user;
+        $(MSBuildThisFileDirectory)..\..\..\flowebpfext;
+        $(MSBuildThisFileDirectory)..\..\..\flowebpfext\user;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc\winuser;
+        $(MSBuildThisFileDirectory)..\..\..\libs\ebpf_ext;
+        $(MSBuildThisFileDirectory)..\..\..\resource
+      </AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4505</DisableSpecificWarnings>
