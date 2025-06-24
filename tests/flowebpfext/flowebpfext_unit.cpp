@@ -155,7 +155,7 @@ TEST_CASE("flowebpfext_bpf_attach_invoke", "[flowebpfext]")
     // REQUIRE(client_context.flow_context.protocol == IPPROTO_UDP);
 }
 
-TEST //_CASE("flowebpfext_return_codes", "[flowebpfext]")
+TEST_CASE("flowebpfext_return_codes", "[flowebpfext]")
 {
     // ebpf_extension_data_t npi_specific_characteristics = {};
     // test_flow_client_context_t client_context = {};
@@ -211,7 +211,7 @@ TEST //_CASE("flowebpfext_return_codes", "[flowebpfext]")
     // REQUIRE(client_context.program_invoked == true);
 }
 
-TEST //_CASE("flowebpfext_error_handling", "[flowebpfext]")
+TEST_CASE("flowebpfext_error_handling", "[flowebpfext]")
 {
     // ebpf_extension_data_t npi_specific_characteristics = {};
     // test_flow_client_context_t client_context = {};
@@ -239,7 +239,7 @@ TEST //_CASE("flowebpfext_error_handling", "[flowebpfext]")
     // REQUIRE(invoke_result == EBPF_INVALID_ARGUMENT);
 }
 
-TEST //_CASE("flowebpfext_flow_helper_function", "[flowebpfext]")
+TEST_CASE("flowebpfext_flow_helper_function", "[flowebpfext]")
 {
     //// Test the bpf_flow_test_helper function
     // flow_classify_md_t flow_md = {};
@@ -274,7 +274,7 @@ TEST //_CASE("flowebpfext_flow_helper_function", "[flowebpfext]")
     // REQUIRE(result == -EINVAL);
 }
 
-TEST //_CASE("flowebpfext_ipv6_flows", "[flowebpfext]")
+TEST_CASE("flowebpfext_ipv6_flows", "[flowebpfext]")
 {
     // ebpf_extension_data_t npi_specific_characteristics = {};
     // test_flow_client_context_t client_context = {};
@@ -308,7 +308,7 @@ TEST //_CASE("flowebpfext_ipv6_flows", "[flowebpfext]")
     // REQUIRE(client_context.flow_context.direction == 0);
 }
 
-TEST //_CASE("flowebpfext_stream_data_inspection", "[flowebpfext]")
+TEST_CASE("flowebpfext_stream_data_inspection", "[flowebpfext]")
 {
     // ebpf_extension_data_t npi_specific_characteristics = {};
     // test_flow_client_context_t client_context = {};
