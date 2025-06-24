@@ -45,10 +45,14 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="flowebpfext_unit.cpp" />
+    <ClCompile Include="flow_ebpf_ext_helper.cpp" />
+    <ClInclude Include="..\flow_ebpf_ext_classify.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\catch_wrapper.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\watchdog.h" />
+    <ClInclude Include="flow_ebpf_ext_helper.h" />
+    <ClInclude Include="flow_ebpf_ext_platform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\ebpf_extensions\flowebpfext\flow_ebpf_ext_classify.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\ebpf_extensions\flowebpfext\flow_ebpf_ext_program_info.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\libs\ebpf_ext\include\ebpf_ext.h" />
