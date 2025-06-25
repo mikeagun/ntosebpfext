@@ -14,23 +14,14 @@
 #include "usersim\wdf.h"
 // #include "..\src\net_platform.h"
 
-// Include Windows SDK headers for FWP types, but do it carefully
-// to avoid conflicts with usersim definitions
-// #ifndef _KERNEL_MODE
+// Include only essential headers for usersim builds
+// usersim provides its own FWP implementations, so avoid Windows SDK FWP headers
 #include <guiddef.h>
 #include <initguid.h>
 
-// Include user-mode FWP headers from Windows SDK
-// #include <windows.h>
-
-// #include <fwpsu.h>
-// #include <fwpsk.h>
-// #include <fwpmu.h>
-#include <fwpmk.h>
-// #include <fwpmtypes.h>
-
-// #include <fwpmtypes.h>
-// #include <ws2def.h>
+// Include usersim FWP engine definitions which provides FWPS types and functions
+// This must come after the basic headers but before any Windows SDK FWP headers
+#include "fwp_um.h"
 
 #define ebpf_fault_injection_is_enabled() cxplat_fault_injection_is_enabled()
 

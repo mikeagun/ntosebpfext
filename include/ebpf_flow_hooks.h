@@ -7,9 +7,9 @@
 // exposed by flowebpfext.sys for use by eBPF programs.
 
 typedef enum _flow_classsify_result {
-    ALLOW,
-    BLOCK,
-    NEED_MORE_DATA,
+    FLOW_CLASSIFY_ALLOW,
+    FLOW_CLASSIFY_BLOCK,
+    FLOW_CLASSIFY_NEED_MORE_DATA,
 } flow_classsify_result_t;
 
 typedef struct _flow_classify_md

@@ -51,22 +51,19 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>
-      $(VC_IncludePath);
-      $(WindowsSDK_IncludePath)
+      $(VC_IncludePath)
     </IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='FuzzerDebug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>
-      $(VC_IncludePath);
-      $(WindowsSDK_IncludePath)
+      $(VC_IncludePath)
     </IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>
-      $(VC_IncludePath);
-      $(WindowsSDK_IncludePath)
+      $(VC_IncludePath)
     </IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -85,13 +82,16 @@
         $(MSBuildThisFileDirectory)..\..\..\include;
         $(MSBuildThisFileDirectory)..\..\..\libs\include\user;
         $(MSBuildThisFileDirectory)..\..\..\external\usersim\inc;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\src;
         $(MSBuildThisFileDirectory)..\..\..\include\user;
         $(MSBuildThisFileDirectory)..\..\..\flowebpfext;
         $(MSBuildThisFileDirectory)..\..\..\flowebpfext\user;
         $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc;
         $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc\winuser;
         $(MSBuildThisFileDirectory)..\..\..\libs\ebpf_ext;
-        $(MSBuildThisFileDirectory)..\..\..\resource
+        $(MSBuildThisFileDirectory)..\..\..\resource;
+        $(WindowsSDK_IncludePath)\um;
+        $(WindowsSDK_IncludePath)\shared
       </AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -127,13 +127,16 @@
         $(MSBuildThisFileDirectory)..\..\..\include;
         $(MSBuildThisFileDirectory)..\..\..\libs\include\user;
         $(MSBuildThisFileDirectory)..\..\..\external\usersim\inc;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\src;
         $(MSBuildThisFileDirectory)..\..\..\include\user;
         $(MSBuildThisFileDirectory)..\..\..\flowebpfext;
         $(MSBuildThisFileDirectory)..\..\..\flowebpfext\user;
         $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc;
         $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc\winuser;
         $(MSBuildThisFileDirectory)..\..\..\libs\ebpf_ext;
-        $(MSBuildThisFileDirectory)..\..\..\resource
+        $(MSBuildThisFileDirectory)..\..\..\resource;
+        $(WindowsSDK_IncludePath)\um;
+        $(WindowsSDK_IncludePath)\shared
       </AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>

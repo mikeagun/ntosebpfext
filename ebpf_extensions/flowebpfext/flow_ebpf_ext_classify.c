@@ -387,21 +387,21 @@ flowebpfext_stream_classify(
 
     uint32_t result = 0;
     ebpf_result_t invoke_result = ebpf_extension_hook_invoke_program(stream_ctx->attached_program, layerData, &result);
-    if (invoke_result != EBPF_SUCCESS || result != NEED_MORE_DATA) {
+    if (invoke_result != EBPF_SUCCESS || result != FLOW_CLASSIFY_NEED_MORE_DATA) {
         FwpsFlowRemoveContext0((UINT64)flowContext, layerId, filter->action.calloutId);
         ExFreePool(stream_ctx);
         stream_ctx = NULL;
     }
     if (invoke_result == EBPF_SUCCESS) {
-        if (result == ALLOW) {
+        if (result == FLOW_CLASSIFY_ALLOW) {
             EBPF_EXT_LOG_MESSAGE(
                 EBPF_EXT_TRACELOG_LEVEL_INFO, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "eBPF program allowed the flow");
             classifyOut->actionType = FWP_ACTION_PERMIT;
-        } else if (result == BLOCK) {
+        } else if (result == FLOW_CLASSIFY_BLOCK) {
             EBPF_EXT_LOG_MESSAGE(
                 EBPF_EXT_TRACELOG_LEVEL_INFO, EBPF_EXT_TRACELOG_KEYWORD_FLOW, "eBPF program blocked the flow");
             classifyOut->actionType = FWP_ACTION_BLOCK;
-        } else if (result == NEED_MORE_DATA) {
+        } else if (result == FLOW_CLASSIFY_NEED_MORE_DATA) {
             classifyOut->actionType = FWP_ACTION_CONTINUE;
         } else {
             EBPF_EXT_LOG_MESSAGE(
@@ -503,6 +503,7 @@ flowebpfext_register_flow_callouts()
     callout.classifyFn = flowebpfext_stream_classify;
     callout.flowDeleteFn = flowebpfext_flow_delete;
     callout.flags = FWP_CALLOUT_FLAG_CONDITIONAL_ON_FLOW;
+    callout.applicableLayer = FWPM_LAYER_STREAM_V4;
     status = FwpsCalloutRegister(NULL, &callout, &calloutId);
     if (!NT_SUCCESS(status))
         goto Cleanup;
@@ -513,6 +514,7 @@ flowebpfext_register_flow_callouts()
     callout.classifyFn = flowebpfext_stream_classify;
     callout.flowDeleteFn = flowebpfext_flow_delete;
     callout.flags = FWP_CALLOUT_FLAG_CONDITIONAL_ON_FLOW;
+    callout.applicableLayer = FWPM_LAYER_STREAM_V6;
     status = FwpsCalloutRegister(NULL, &callout, &calloutId);
     if (!NT_SUCCESS(status))
         goto Cleanup;
@@ -523,6 +525,7 @@ flowebpfext_register_flow_callouts()
     callout.classifyFn = flowebpfext_flow_established_classify;
     // callout.flowDeleteFn = flowebpfext_flow_delete;
     callout.flags = 0;
+    callout.applicableLayer = FWPM_LAYER_ALE_FLOW_ESTABLISHED_V4;
     status = FwpsCalloutRegister(NULL, &callout, &calloutId);
     if (!NT_SUCCESS(status))
         goto Cleanup;
@@ -533,6 +536,7 @@ flowebpfext_register_flow_callouts()
     callout.classifyFn = flowebpfext_flow_established_classify;
     // callout.flowDeleteFn = flowebpfext_flow_delete;
     callout.flags = 0;
+    callout.applicableLayer = FWPM_LAYER_ALE_FLOW_ESTABLISHED_V6;
     status = FwpsCalloutRegister(NULL, &callout, &calloutId);
     if (!NT_SUCCESS(status))
         goto Cleanup;

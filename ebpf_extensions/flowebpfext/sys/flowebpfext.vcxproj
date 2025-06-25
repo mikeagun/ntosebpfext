@@ -4,7 +4,7 @@
   SPDX-License-Identifier: MIT
 -->
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(SolutionDir)\ntosebpfext.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\ntosebpfext.props" />
   <Import Project="$(eBPFForWindowsPackagePath)\build\native\ebpf-for-windows.x64.props" Condition="Exists('$(eBPFForWindowsPackagePath)\build\native\ebpf-for-windows.x64.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -95,7 +95,7 @@
       <AdditionalIncludeDirectories>
         %(AdditionalIncludeDirectories);
         $(DDK_INC_PATH);
-        $(SolutionDir)include
+        $(MSBuildThisFileDirectory)..\..\..\include
       </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>
         %(PreprocessorDefinitions);
@@ -111,12 +111,12 @@
       <AdditionalIncludeDirectories>
         %(AdditionalIncludeDirectories);
         $(DDK_INC_PATH);
-        $(SolutionDir)include;
-        $(SolutionDir)libs\include\kernel;
-        $(SolutionDir)include\kernel;
-        $(SolutionDir)resource;
-        $(SolutionDir)flowebpfext;
-        $(SolutionDir)libs\ebpf_ext
+        $(MSBuildThisFileDirectory)..\..\..\include;
+        $(MSBuildThisFileDirectory)..\..\..\libs\include\kernel;
+        $(MSBuildThisFileDirectory)..\..\..\include\kernel;
+        $(MSBuildThisFileDirectory)..\..\..\resource;
+        $(MSBuildThisFileDirectory)..\..\..\flowebpfext;
+        $(MSBuildThisFileDirectory)..\..\..\libs\ebpf_ext
       </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>
         %(PreprocessorDefinitions);
@@ -158,7 +158,7 @@
       </AdditionalDependencies>
       <AdditionalLibraryDirectories>
         $(OutDir);
-        $(SolutionDir)$(Platform)\$(ConfigurationName)\;
+        $(MSBuildThisFileDirectory)..\..\..\$(Platform)\$(ConfigurationName)\;
         %(AdditionalLibraryDirectories)
       </AdditionalLibraryDirectories>
       <AdditionalOptions>/INTEGRITYCHECK %(AdditionalOptions)</AdditionalOptions>
@@ -172,7 +172,7 @@
       <AdditionalIncludeDirectories>
         %(AdditionalIncludeDirectories);
         $(DDK_INC_PATH);
-        $(SolutionDir)include
+        $(MSBuildThisFileDirectory)..\..\..\include
       </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>
         %(PreprocessorDefinitions);
@@ -187,12 +187,12 @@
       <AdditionalIncludeDirectories>
         %(AdditionalIncludeDirectories);
         $(DDK_INC_PATH);
-        $(SolutionDir)include;
-        $(SolutionDir)libs\include\kernel;
-        $(SolutionDir)include\kernel;
-        $(SolutionDir)resource;
-        $(SolutionDir)flowebpfext;
-        $(SolutionDir)libs\ebpf_ext
+        $(MSBuildThisFileDirectory)..\..\..\include;
+        $(MSBuildThisFileDirectory)..\..\..\libs\include\kernel;
+        $(MSBuildThisFileDirectory)..\..\..\include\kernel;
+        $(MSBuildThisFileDirectory)..\..\..\resource;
+        $(MSBuildThisFileDirectory)..\..\..\flowebpfext;
+        $(MSBuildThisFileDirectory)..\..\..\libs\ebpf_ext
       </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>
         %(PreprocessorDefinitions);
@@ -231,7 +231,7 @@
       </AdditionalDependencies>
       <AdditionalLibraryDirectories>
         $(OutDir);
-        $(SolutionDir)$(Platform)\$(ConfigurationName)\;
+        $(MSBuildThisFileDirectory)..\..\..\$(Platform)\$(ConfigurationName)\;
         %(AdditionalLibraryDirectories)
       </AdditionalLibraryDirectories>
       <AdditionalOptions>/INTEGRITYCHECK %(AdditionalOptions)</AdditionalOptions>
