@@ -6,11 +6,31 @@
 #include "cxplat_fault_injection.h"
 #include "shared_context.h"
 #include "usersim\ex.h"
+#include "usersim\fwp_test.h"
 #include "usersim\ke.h"
 #include "usersim\ps.h"
 #include "usersim\rtl.h"
 #include "usersim\se.h"
 #include "usersim\wdf.h"
+// #include "..\src\net_platform.h"
+
+// Include Windows SDK headers for FWP types, but do it carefully
+// to avoid conflicts with usersim definitions
+// #ifndef _KERNEL_MODE
+#include <guiddef.h>
+#include <initguid.h>
+
+// Include user-mode FWP headers from Windows SDK
+// #include <windows.h>
+
+// #include <fwpsu.h>
+// #include <fwpsk.h>
+// #include <fwpmu.h>
+#include <fwpmk.h>
+// #include <fwpmtypes.h>
+
+// #include <fwpmtypes.h>
+// #include <ws2def.h>
 
 #define ebpf_fault_injection_is_enabled() cxplat_fault_injection_is_enabled()
 

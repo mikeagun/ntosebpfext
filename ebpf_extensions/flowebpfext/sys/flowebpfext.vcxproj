@@ -65,38 +65,102 @@
   <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    <IncludePath>$(IncludePath);$(KMDF_INC_PATH)$(KMDF_VER_PATH)</IncludePath>
+    <IncludePath>
+      $(IncludePath);
+      $(KMDF_INC_PATH)$(KMDF_VER_PATH)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NativeOnlyDebug|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    <IncludePath>$(IncludePath);$(KMDF_INC_PATH)$(KMDF_VER_PATH)</IncludePath>
+    <IncludePath>
+      $(IncludePath);
+      $(KMDF_INC_PATH)$(KMDF_VER_PATH)
+    </IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    <IncludePath>$(IncludePath);$(KMDF_INC_PATH)$(KMDF_VER_PATH)</IncludePath>
+    <IncludePath>
+      $(IncludePath);
+      $(KMDF_INC_PATH)$(KMDF_VER_PATH)
+    </IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NativeOnlyRelease|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    <IncludePath>$(IncludePath);$(KMDF_INC_PATH)$(KMDF_VER_PATH)</IncludePath>
+    <IncludePath>
+      $(IncludePath);
+      $(KMDF_INC_PATH)$(KMDF_VER_PATH)
+    </IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ResourceCompile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(DDK_INC_PATH);$(SolutionDir)include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);BINARY_COMPATIBLE=0;NT;UNICODE;_UNICODE;NDIS60;POOL_NX_OPTIN_AUTO</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(DDK_INC_PATH);
+        $(SolutionDir)include
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>
+        %(PreprocessorDefinitions);
+        BINARY_COMPATIBLE=0;
+        NT;
+        UNICODE;
+        _UNICODE;
+        NDIS60;
+        POOL_NX_OPTIN_AUTO
+      </PreprocessorDefinitions>
     </ResourceCompile>
     <ClCompile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(DDK_INC_PATH);$(SolutionDir)include;$(SolutionDir)libs\include\kernel;$(SolutionDir)include\kernel;$(SolutionDir)resource;$(SolutionDir)flowebpfext;$(SolutionDir)libs\ebpf_ext</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);BINARY_COMPATIBLE=0;NT;UNICODE;_UNICODE;NDIS60;POOL_NX_OPTIN_AUTO;PROVIDER_NAME=flow;</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(DDK_INC_PATH);
+        $(SolutionDir)include;
+        $(SolutionDir)libs\include\kernel;
+        $(SolutionDir)include\kernel;
+        $(SolutionDir)resource;
+        $(SolutionDir)flowebpfext;
+        $(SolutionDir)libs\ebpf_ext
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>
+        %(PreprocessorDefinitions);
+        BINARY_COMPATIBLE=0;
+        NT;
+        UNICODE;
+        _UNICODE;
+        NDIS60;
+        POOL_NX_OPTIN_AUTO;
+        PROVIDER_NAME=flow
+      </PreprocessorDefinitions>
       <!-- Change stack depth for C6262 from 1024 to 4096 -->
       <PREfastAdditionalOptions>stacksize4096</PREfastAdditionalOptions>
     </ClCompile>
     <Midl>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(DDK_INC_PATH)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);BINARY_COMPATIBLE=0;NT;UNICODE;_UNICODE;NDIS60;POOL_NX_OPTIN_AUTO;NDEBUG</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(DDK_INC_PATH)
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>
+        %(PreprocessorDefinitions);
+        BINARY_COMPATIBLE=0;
+        NT;
+        UNICODE;
+        _UNICODE;
+        NDIS60;
+        POOL_NX_OPTIN_AUTO;
+        NDEBUG
+      </PreprocessorDefinitions>
     </Midl>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(DDK_LIB_PATH)\ntoskrnl.lib;$(DDK_LIB_PATH)\ndis.lib;$(DDK_LIB_PATH)\wdmsec.lib;$(DDK_LIB_PATH)\netio.lib;$(DDK_LIB_PATH)\fwpkclnt.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Platform)\$(ConfigurationName)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+        %(AdditionalDependencies);
+        $(DDK_LIB_PATH)\ntoskrnl.lib;
+        $(DDK_LIB_PATH)\ndis.lib;
+        $(DDK_LIB_PATH)\wdmsec.lib;
+        $(DDK_LIB_PATH)\netio.lib;
+        $(DDK_LIB_PATH)\fwpkclnt.lib
+      </AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+        $(OutDir);
+        $(SolutionDir)$(Platform)\$(ConfigurationName)\;
+        %(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
       <AdditionalOptions>/INTEGRITYCHECK %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <DriverSign>
@@ -105,20 +169,71 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ResourceCompile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(DDK_INC_PATH);$(SolutionDir)include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);BINARY_COMPATIBLE=0;NT;UNICODE;_UNICODE;NDIS60;POOL_NX_OPTIN_AUTO</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(DDK_INC_PATH);
+        $(SolutionDir)include
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>
+        %(PreprocessorDefinitions);
+        BINARY_COMPATIBLE=0;
+        NT;
+        UNICODE;
+        _UNICODE;
+        NDIS60;
+        POOL_NX_OPTIN_AUTO</PreprocessorDefinitions>
     </ResourceCompile>
     <ClCompile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(DDK_INC_PATH);$(SolutionDir)include;$(SolutionDir)libs\include\kernel;$(SolutionDir)include\kernel;$(SolutionDir)resource;$(SolutionDir)flowebpfext;$(SolutionDir)libs\ebpf_ext</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);BINARY_COMPATIBLE=0;NT;UNICODE;_UNICODE;NDIS60;POOL_NX_OPTIN_AUTO;PROVIDER_NAME=flow;</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(DDK_INC_PATH);
+        $(SolutionDir)include;
+        $(SolutionDir)libs\include\kernel;
+        $(SolutionDir)include\kernel;
+        $(SolutionDir)resource;
+        $(SolutionDir)flowebpfext;
+        $(SolutionDir)libs\ebpf_ext
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>
+        %(PreprocessorDefinitions);
+        BINARY_COMPATIBLE=0;
+        NT;
+        UNICODE;
+        _UNICODE;
+        NDIS60;
+        POOL_NX_OPTIN_AUTO;
+        PROVIDER_NAME=flow
+      </PreprocessorDefinitions>
     </ClCompile>
     <Midl>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(DDK_INC_PATH)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);BINARY_COMPATIBLE=0;NT;UNICODE;_UNICODE;NDIS60;POOL_NX_OPTIN_AUTO</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(DDK_INC_PATH)
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>
+        %(PreprocessorDefinitions);
+        BINARY_COMPATIBLE=0;
+        NT;
+        UNICODE;
+        _UNICODE;
+        NDIS60;
+        POOL_NX_OPTIN_AUTO
+      </PreprocessorDefinitions>
     </Midl>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(DDK_LIB_PATH)\ntoskrnl.lib;$(DDK_LIB_PATH)\ndis.lib;$(DDK_LIB_PATH)\wdmsec.lib;$(DDK_LIB_PATH)\netio.lib;$(DDK_LIB_PATH)\fwpkclnt.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Platform)\$(ConfigurationName)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+        %(AdditionalDependencies);
+        $(DDK_LIB_PATH)\ntoskrnl.lib;
+        $(DDK_LIB_PATH)\ndis.lib;
+        $(DDK_LIB_PATH)\wdmsec.lib;
+        $(DDK_LIB_PATH)\netio.lib;
+        $(DDK_LIB_PATH)\fwpkclnt.lib
+      </AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+        $(OutDir);
+        $(SolutionDir)$(Platform)\$(ConfigurationName)\;
+        %(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
       <AdditionalOptions>/INTEGRITYCHECK %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <DriverSign>
@@ -153,7 +268,10 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\..\resource\ebpf_ext_resource.rc">
-      <PreprocessorDefinitions>PROVIDER_NAME=FLOW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>
+        PROVIDER_NAME=FLOW;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
     </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

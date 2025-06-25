@@ -22,10 +22,11 @@
 #pragma warning(disable : 4062) // unhandled switch case
 #include <wdf.h>
 #pragma warning(pop)
-////#include <guiddef.h>
+// clang-format off
+#include <initguid.h>
 #include <fwpmk.h>
 #include <fwpsk.h>
-#include <initguid.h>
+// clang-format on
 
 #define ebpf_list_entry_t LIST_ENTRY
 
