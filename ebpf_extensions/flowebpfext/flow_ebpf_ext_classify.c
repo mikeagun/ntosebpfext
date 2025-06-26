@@ -5,32 +5,9 @@
  * @file
  * @brief This file implements the flow classify program type hook on eBPF for Windows (stream inspection API).
  */
-//#include "framework.h"
 #include "flow_ebpf_ext_platform.h"
-// //#if defined(NTDDI_VERSION) || defined(NT_KERNEL_MODE)
-// #include <ntifs.h> // Must be included before ntddk.h
-// #include <ntddk.h>
-// #pragma warning(push)
-// #pragma warning(disable:4062)       // unhandled switch case
-// #include <wdf.h>
-// #pragma warning(pop)
-// //#include <guiddef.h>
-// #include <initguid.h>
-// #include <fwpsk.h>
-// #include <fwpmk.h>
-// //#else
-// //// FIXME: ???
-// //#endif
-
 #include "flow_ebpf_ext_classify.h"
 #include "flow_ebpf_ext_program_info.h"
-
-// #include "flow_ebpf_ext_stream.h"
-
-// #if defined(NTDDI_VERSION) || defined(NT_KERNEL_MODE)
-// #include <fwpmk.h>
-// #include <fwpsk.h>
-// #endif
 
 #include <errno.h>
 

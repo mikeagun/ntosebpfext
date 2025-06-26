@@ -24,59 +24,90 @@
     <ProjectName>flowebpfext_user</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+
+  <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
+
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
+  <PropertyGroup Label="ProjectConfiguration">
     <IncludePath>
       $(VC_IncludePath)
     </IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='FuzzerDebug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>
-      $(VC_IncludePath)
-    </IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>
-      $(VC_IncludePath)
-    </IncludePath>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'" Label="ProjectConfigurations">
     <ClCompile>
       <PreprocessorDefinitions>
         PROVIDER_NAME=flow;
-        _DEBUG;
         _CONSOLE;
         _AMD64_;
         AMD64;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <!--AdditionalIncludeDirectories> /// From netebpfext
+        $(SolutionDir)include;
+        $(SolutionDir)libs\shared;
+        $(SolutionDir)libs\shared\user;
+        $(SolutionDir)libs\runtime;
+        $(SolutionDir)libs\runtime\user;
+        $(SolutionDir)external\usersim\inc;
+        $(SolutionDir)external\usersim\src;
+        $(SolutionDir)external\usersim\cxplat\inc;
+        $(SolutionDir)external\usersim\cxplat\inc\winuser;
+        $(OutputPath);
+        $(SolutionDir)external\ebpf-verifier\src;
+        $(SolutionDir)include\user;
+        $(SolutionDir)netebpfext;
+        $(SolutionDir)netebpfext\user;
+        $(SolutionDir)libs\thunk;
+        $(SolutionDir)tests\libs\util;
+        $(SolutionDir)external\catch2\src;
+        $(SolutionDir)external\catch2\build\generated-includes;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories-->
+      <!--AdditionalIncludeDirectories> /// Previous version for flowebpfext_user
+        %(AdditionalIncludeDirectories);
+        $(MSBuildThisFileDirectory);
+        $(MSBuildThisFileDirectory)..\..\..\include;
+        $(MSBuildThisFileDirectory)..\..\..\libs\include\user;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\inc;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\src;
+        $(MSBuildThisFileDirectory)..\..\..\include\user;
+        $(MSBuildThisFileDirectory)..\..\..\flowebpfext;
+        $(MSBuildThisFileDirectory)..\..\..\flowebpfext\user;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc;
+        $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc\winuser;
+        $(MSBuildThisFileDirectory)..\..\..\libs\ebpf_ext;
+        $(MSBuildThisFileDirectory)..\..\..\resource;
+        $(WindowsSDK_IncludePath)\um;
+        $(WindowsSDK_IncludePath)\shared
+      </AdditionalIncludeDirectories-->
       <AdditionalIncludeDirectories>
         %(AdditionalIncludeDirectories);
         $(MSBuildThisFileDirectory);
@@ -94,8 +125,8 @@
         $(WindowsSDK_IncludePath)\um;
         $(WindowsSDK_IncludePath)\shared
       </AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>
       <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4505</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -112,52 +143,27 @@
       </AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>
+        _DEBUG;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <SourceDependencies>true</SourceDependencies>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PreprocessorDefinitions>
-        PROVIDER_NAME=flow;
         NDEBUG;
-        _CONSOLE;
-        _AMD64_;
-        AMD64;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>
-        %(AdditionalIncludeDirectories);
-        $(MSBuildThisFileDirectory)..\..\..\include;
-        $(MSBuildThisFileDirectory)..\..\..\libs\include\user;
-        $(MSBuildThisFileDirectory)..\..\..\external\usersim\inc;
-        $(MSBuildThisFileDirectory)..\..\..\external\usersim\src;
-        $(MSBuildThisFileDirectory)..\..\..\include\user;
-        $(MSBuildThisFileDirectory)..\..\..\flowebpfext;
-        $(MSBuildThisFileDirectory)..\..\..\flowebpfext\user;
-        $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc;
-        $(MSBuildThisFileDirectory)..\..\..\external\usersim\cxplat\inc\winuser;
-        $(MSBuildThisFileDirectory)..\..\..\libs\ebpf_ext;
-        $(MSBuildThisFileDirectory)..\..\..\resource;
-        $(WindowsSDK_IncludePath)\um;
-        $(WindowsSDK_IncludePath)\shared
-      </AdditionalIncludeDirectories>
-      <CompileAs>CompileAsCpp</CompileAs>
-      <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4505</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>
-        mincore.lib;
-        %(AdditionalDependencies)
-      </AdditionalDependencies>
     </Link>
-    <Lib>
-      <AdditionalLibraryDirectories>
-        $(MSBuildThisFileDirectory)..\..\..\$(Platform)\$(ConfigurationName)\
-      </AdditionalLibraryDirectories>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\libs\ebpf_ext\ebpf_ext.c" />
