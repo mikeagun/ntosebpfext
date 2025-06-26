@@ -99,6 +99,7 @@
         $(MSBuildThisFileDirectory)..\..\external\catch2\build\generated-includes;
         $(MSBuildThisFileDirectory)..\..\ebpf_extensions\flowebpfext;
         $(MSBuildThisFileDirectory)..\..\external\usersim\inc;
+        $(MSBuildThisFileDirectory)..\..\external\usersim\src;
         $(MSBuildThisFileDirectory)..\..\external\usersim\cxplat\inc;
         $(MSBuildThisFileDirectory)..\..\external\usersim\cxplat\inc\winuser;
         $(MSBuildThisFileDirectory)..\..\libs\ebpf_ext
@@ -130,6 +131,7 @@
         $(MSBuildThisFileDirectory)..\..\external\catch2\build\generated-includes;
         $(MSBuildThisFileDirectory)..\..\ebpf_extensions\flowebpfext;
         $(MSBuildThisFileDirectory)..\..\external\usersim\inc;
+        $(MSBuildThisFileDirectory)..\..\external\usersim\src;
         $(MSBuildThisFileDirectory)..\..\external\usersim\cxplat\inc;
         $(MSBuildThisFileDirectory)..\..\external\usersim\cxplat\inc\winuser;
         $(MSBuildThisFileDirectory)..\..\libs\ebpf_ext

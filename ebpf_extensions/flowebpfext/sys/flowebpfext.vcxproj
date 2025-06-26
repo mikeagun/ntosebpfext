@@ -187,7 +187,7 @@
   <ItemGroup>
     <ResourceCompile Include="..\..\..\resource\ebpf_ext_resource.rc">
       <PreprocessorDefinitions>
-        PROVIDER_NAME=FLOW;
+        PROVIDER_NAME=flow;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
     </ResourceCompile>

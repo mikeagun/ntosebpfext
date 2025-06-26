@@ -5,7 +5,7 @@
 #include "flow_ebpf_ext_helper.h"
 // #include "usersim\fwp_test.h"
 // #include "usersim\km\platform.h"
-#include "fwp_test.h"
+#include "usersim\fwp_test.h"
 #include "platform.h"
 
 // FIXME (before merge): These helpers have not been fully reviewed/implemented.

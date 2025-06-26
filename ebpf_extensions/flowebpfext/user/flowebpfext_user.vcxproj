@@ -64,10 +64,27 @@
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'" Label="ProjectConfigurations">
     <ClCompile>
       <PreprocessorDefinitions>
-        PROVIDER_NAME=flow;
-        _CONSOLE;
         _AMD64_;
         AMD64;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64'" Label="ProjectConfigurations">
+    <ClCompile>
+      <PreprocessorDefinitions>
+        _ARM64_;
+        ARM64;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Label="ProjectConfigurations">
+    <ClCompile>
+      <PreprocessorDefinitions>
+        PROVIDER_NAME=flow;
+        _CONSOLE;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <!--AdditionalIncludeDirectories> /// From netebpfext
