@@ -79,6 +79,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>
         %(AdditionalIncludeDirectories);
+        $(MSBuildThisFileDirectory);
         $(MSBuildThisFileDirectory)..\..\..\include;
         $(MSBuildThisFileDirectory)..\..\..\libs\include\user;
         $(MSBuildThisFileDirectory)..\..\..\external\usersim\inc;
@@ -113,6 +114,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <SourceDependencies>true</SourceDependencies>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PreprocessorDefinitions>
         PROVIDER_NAME=flow;

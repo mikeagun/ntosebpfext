@@ -5,7 +5,8 @@
  * @file
  * @brief This file implements the flow classify program type hook on eBPF for Windows (stream inspection API).
  */
-#include "framework.h"
+//#include "framework.h"
+#include "flow_ebpf_ext_platform.h"
 // //#if defined(NTDDI_VERSION) || defined(NT_KERNEL_MODE)
 // #include <ntifs.h> // Must be included before ntddk.h
 // #include <ntddk.h>
@@ -503,7 +504,7 @@ flowebpfext_register_flow_callouts()
     callout.classifyFn = flowebpfext_stream_classify;
     callout.flowDeleteFn = flowebpfext_flow_delete;
     callout.flags = FWP_CALLOUT_FLAG_CONDITIONAL_ON_FLOW;
-    callout.applicableLayer = FWPM_LAYER_STREAM_V4;
+    //needs to be registered on  FWPM_LAYER_STREAM_V4 layer
     status = FwpsCalloutRegister(NULL, &callout, &calloutId);
     if (!NT_SUCCESS(status))
         goto Cleanup;
@@ -514,7 +515,7 @@ flowebpfext_register_flow_callouts()
     callout.classifyFn = flowebpfext_stream_classify;
     callout.flowDeleteFn = flowebpfext_flow_delete;
     callout.flags = FWP_CALLOUT_FLAG_CONDITIONAL_ON_FLOW;
-    callout.applicableLayer = FWPM_LAYER_STREAM_V6;
+    //needs to be registered on  FWPM_LAYER_STREAM_V6 layer
     status = FwpsCalloutRegister(NULL, &callout, &calloutId);
     if (!NT_SUCCESS(status))
         goto Cleanup;
@@ -525,7 +526,7 @@ flowebpfext_register_flow_callouts()
     callout.classifyFn = flowebpfext_flow_established_classify;
     // callout.flowDeleteFn = flowebpfext_flow_delete;
     callout.flags = 0;
-    callout.applicableLayer = FWPM_LAYER_ALE_FLOW_ESTABLISHED_V4;
+    // needs to be registered on FWPM_LAYER_ALE_FLOW_ESTABLISHED_V4 layer
     status = FwpsCalloutRegister(NULL, &callout, &calloutId);
     if (!NT_SUCCESS(status))
         goto Cleanup;
@@ -536,7 +537,7 @@ flowebpfext_register_flow_callouts()
     callout.classifyFn = flowebpfext_flow_established_classify;
     // callout.flowDeleteFn = flowebpfext_flow_delete;
     callout.flags = 0;
-    callout.applicableLayer = FWPM_LAYER_ALE_FLOW_ESTABLISHED_V6;
+    // needs to be registered on FWPM_LAYER_ALE_FLOW_ESTABLISHED_V6
     status = FwpsCalloutRegister(NULL, &callout, &calloutId);
     if (!NT_SUCCESS(status))
         goto Cleanup;

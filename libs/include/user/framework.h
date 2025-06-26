@@ -3,6 +3,49 @@
 
 #pragma once
 
+#include <ntddk.h>
+#pragma warning(push)
+#pragma warning(disable : 4201) // unnamed struct/union
+#include <fwpmk.h>
+#include <fwpsk.h>
+#pragma warning(pop)
+#include <netiodef.h>
+#pragma warning(push)
+#pragma warning(disable : 4062) // enumerator 'identifier' in switch of enum 'enumeration' is not handled
+#include <wdf.h>
+#pragma warning(pop)
+
+
+//#include <guiddef.h>
+//#include <netioapi.h>
+//#include <netiodef.h>
+
+// Get definitions for ULONGLONG, etc.
+#include <guiddef.h>
+#include <netioapi.h>
+#include <netiodef.h>
+
+#ifdef _MSC_VER
+#include <guiddef.h>
+#else
+typedef uint8_t GUID[16];
+#endif
+
+#if !defined(NO_CRT) && !defined(_NO_CRT_STDIO_INLINE)
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#else
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+typedef unsigned short wchar_t;
+typedef unsigned int uint32_t;
+typedef unsigned long long uint64_t;
+typedef unsigned long long size_t;
+#define bool _Bool
+#endif
+
+
 #include "cxplat_fault_injection.h"
 #include "shared_context.h"
 #include "usersim\ex.h"
@@ -12,16 +55,22 @@
 #include "usersim\rtl.h"
 #include "usersim\se.h"
 #include "usersim\wdf.h"
-// #include "..\src\net_platform.h"
+//#include "kernel_um.h"
+#include "..\src\net_platform.h"
+//netebpfext_platform.h
 
-// Include only essential headers for usersim builds
-// usersim provides its own FWP implementations, so avoid Windows SDK FWP headers
-#include <guiddef.h>
-#include <initguid.h>
+//#include "..\src\fwp_um.h"
 
-// Include usersim FWP engine definitions which provides FWPS types and functions
-// This must come after the basic headers but before any Windows SDK FWP headers
-#include "fwp_um.h"
+//#include <winsock2.h>
+//#include <windows.h>
+//
+//#include <guiddef.h>
+//#include <netioapi.h>
+//#include <netiodef.h>
+//#include <netioddk.h>
+//#include <netiodef.h>
+//#include <guiddef.h>
+//#include <initguid.h>
 
 #define ebpf_fault_injection_is_enabled() cxplat_fault_injection_is_enabled()
 

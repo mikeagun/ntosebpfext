@@ -111,6 +111,7 @@
       <AdditionalIncludeDirectories>
         %(AdditionalIncludeDirectories);
         $(DDK_INC_PATH);
+        $(MSBuildThisFileDirectory);
         $(MSBuildThisFileDirectory)..\..\..\include;
         $(MSBuildThisFileDirectory)..\..\..\libs\include\kernel;
         $(MSBuildThisFileDirectory)..\..\..\include\kernel;
@@ -261,6 +262,7 @@
     <ClInclude Include="..\..\..\libs\ebpf_ext\ebpf_ext_tracelog.h" />
     <ClInclude Include="..\flow_ebpf_ext_classify.h" />
     <ClInclude Include="..\flow_ebpf_ext_program_info.h" />
+    <ClInclude Include="flow_ebpf_ext_platform.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
